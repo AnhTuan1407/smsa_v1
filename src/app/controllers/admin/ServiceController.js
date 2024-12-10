@@ -9,7 +9,7 @@ const fs = require('fs');
 const upload = multer({ dest: 'uploads/' });
 
 class ServiceController {
-    //[GET] /api/services/findAll
+    //[GET] /api/admin/services/findAll
     async showAll(req, res, next) {
         try {
             const services = await models.SERVICE.findAll();
@@ -20,10 +20,10 @@ class ServiceController {
         }
     }
 
-    //[POST] /api/services/create
+    //[POST] /api/admin/services/create
     async doCreate(req, res, next) {
         try {
-            const { name, description, price, estimateTime } = req.body;
+            const { name, description, price, estimateTime, subCategoryId } = req.body;
             const imageFile = req.file;
 
             // Đọc file và chuyển thành base64
@@ -35,6 +35,7 @@ class ServiceController {
             const newService = await models.SERVICE.create({
                 NAME: name,
                 DESCRIPTION: description,
+                SUB_CATEGORY_ID: subCategoryId,
                 PRICE: price,
                 ESTIMATE_TIME: estimateTime,
                 IMAGE: imageBase64,
@@ -54,7 +55,7 @@ class ServiceController {
         }
     }
 
-    //[GET] /api/services/:id
+    //[GET] /api/admin/services/detail/:id
     async showDetail(req, res, next) {
         try {
             const id = req.params.id;
@@ -71,10 +72,10 @@ class ServiceController {
         }
     }
 
-    //[PUT] /api/services/:id
+    //[PUT] /api/services/edit/:id
     async doEdit(req, res, next) {
         try {
-            const { name, description, price, estimateTime } = req.body;
+            const { name, description, price, estimateTime, subCategoryId } = req.body;
             const id = req.params.id;
 
             const serviceFetch = await models.SERVICE.findOne({ where: { SERVICE_ID: id } });
@@ -84,6 +85,7 @@ class ServiceController {
             }
 
             let imageBase64 = serviceFetch.IMAGE;
+            
             if (req.file) {
                 const imageFile = req.file;
                 imageBase64 = fs.readFileSync(imageFile.path, { encoding: 'base64' });
@@ -96,6 +98,7 @@ class ServiceController {
                     DESCRIPTION: description,
                     PRICE: price,
                     ESTIMATE_TIME: estimateTime,
+                    SUB_CATEGORY_ID: subCategoryId,
                     IMAGE: imageBase64,
                 },
                 { where: { SERVICE_ID: id } }
@@ -118,7 +121,7 @@ class ServiceController {
         }
     }
 
-    //[DELETE] /api/services/:id
+    //[DELETE] /api/admin/services/delete/:id
     async doDelete(req, res, next) {
         try {
             const id = req.params.id;

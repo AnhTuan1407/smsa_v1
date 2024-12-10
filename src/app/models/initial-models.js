@@ -5,6 +5,8 @@ const _ROLE = require('./Role');
 const _STAFF = require('./Staff');
 const _CUSTOMER = require('./Customer');
 const _SERVICE = require('./Service');
+const _CATEGORY = require('./Category');
+const _SUB_CATEGORY = require('./SubCategory');
 
 function initialModelSqlServer(sequelize) {
     const ACCOUNT = _ACCOUNT(sequelize, DataTypes);
@@ -12,6 +14,8 @@ function initialModelSqlServer(sequelize) {
     const STAFF = _STAFF(sequelize, DataTypes);
     const CUSTOMER = _CUSTOMER(sequelize, DataTypes);
     const SERVICE = _SERVICE(sequelize, DataTypes);
+    const CATEGORY = _CATEGORY(sequelize, DataTypes);
+    const SUB_CATEGORY = _SUB_CATEGORY(sequelize, DataTypes);
 
     return {
         ACCOUNT,
@@ -19,6 +23,8 @@ function initialModelSqlServer(sequelize) {
         STAFF,
         CUSTOMER,
         SERVICE,
+        CATEGORY,
+        SUB_CATEGORY,
     }
 }
 

@@ -73,9 +73,10 @@ class StaffController {
             res.status(201).json({
                 message: "Thêm mới nhân viên thành công!",
                 staff: newStaff,
+                success: true,
             });
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 
@@ -88,12 +89,12 @@ class StaffController {
             });
 
             if (!staff) {
-                return res.status(404).json({ message: "Không tìm thấy nhân viên!" });
+                return res.status(404).json({ message: "Không tìm thấy nhân viên!", success: false });
             }
 
             res.status(200).json(staff);
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 
@@ -115,12 +116,12 @@ class StaffController {
             }, { where: { STAFF_ID: id } });
 
             if (updatedRowsCount > 0) {
-                res.status(200).json({ message: "Chỉnh sửa nhân viên thành công!" });
+                res.status(200).json({ message: "Chỉnh sửa nhân viên thành công!", success: true });
             } else {
-                res.status(404).json({ message: "Không tìm thấy nhân viên để chỉnh sửa!" });
+                res.status(404).json({ message: "Không tìm thấy nhân viên này!", success: false });
             }
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 
@@ -134,12 +135,12 @@ class StaffController {
             });
 
             if (deletedRowsCount > 0) {
-                res.status(200).json({ message: "Xóa nhân viên thành công!" });
+                res.status(200).json({ message: "Xóa nhân viên thành công!", success: true });
             } else {
-                res.status(404).json({ message: "Không tìm thấy nhân viên để xóa!" });
+                res.status(404).json({ message: "Không tìm thấy nhân viên này!", success: false });
             }
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 }
