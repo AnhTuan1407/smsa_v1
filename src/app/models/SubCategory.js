@@ -14,6 +14,9 @@ module.exports = function (sequelize, DataTypes) {
         DESCRIPTION: {
             type: DataTypes.TEXT,
         },
+        IMAGE: {
+            type: DataTypes.TEXT,
+        }
     }, {
         tableName: 'SUB_CATEGORY',
         paranoid: true, // Kích hoạt xóa mềm

@@ -112,7 +112,7 @@ class ServiceController {
             } else {
                 res.status(500).json({
                     success: false,
-                    message: "Cập nhật thất bại!",
+                    message: "Chỉnh sửa thất bại!",
                 });
             }
         } catch (error) {
