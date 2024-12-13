@@ -17,7 +17,7 @@ async function hashPasswordBcrypt(password) {
 
 class StaffController {
 
-    //[GET] /api/staff/findAll
+    //[GET] /api/admin/staff/findAll
     async showAllStaff(req, res, next) {
         try {
             const staffList = await models.STAFF.findAll();
@@ -27,7 +27,7 @@ class StaffController {
         }
     }
 
-    //[POST] /api/staff/create
+    //[POST] /api/admin/staff/create
     async doCreate(req, res, next) {
         try {
             const { name, email, gender, phone, address, role, locationId } = req.body;
@@ -96,7 +96,7 @@ class StaffController {
         }
     }
 
-    //[GET] /api/staff/detail/:id
+    //[GET] /api/admin/staff/detail/:id
     async showDetail(req, res, next) {
         try {
             const id = req.params.id;
@@ -114,7 +114,7 @@ class StaffController {
         }
     }
 
-    //[PUT] /api/staff/edit/:id
+    //[PUT] /api/admin/staff/edit/:id
     async doEdit(req, res, next) {
         try {
             const id = req.params.id;
@@ -142,7 +142,6 @@ class StaffController {
                 PHONE: phone,
                 ROLE: role,
                 IMAGE: imageBase64,
-                ACCOUNT_ID: account.dataValues.ACCOUNT_ID,
                 LOCATION_ID: locationId,
             }, { where: { STAFF_ID: id } });
 
@@ -156,7 +155,7 @@ class StaffController {
         }
     }
 
-    //[DELETE] /api/staff/delete/:id
+    //[DELETE] /api/admin/staff/delete/:id
     async doDelete(req, res, next) {
         try {
             const id = req.params.id;
