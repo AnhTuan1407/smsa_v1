@@ -7,9 +7,9 @@ class CustomerController {
     async showAllCustomer(req, res, next) {
         try {
             const customers = await models.CUSTOMER.findAll();
-            res.status(200).json(customers);
+            res.status(200).json({ success: true, data: customers });
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 

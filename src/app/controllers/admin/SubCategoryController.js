@@ -13,7 +13,7 @@ class SubCategoryController {
     async showAll(req, res, next) {
         try {
             const subCategories = await models.SUB_CATEGORY.findAll();
-            res.status(200).json(subCategories);
+            res.status(200).json({ success: true, data: subCategories });
         } catch (error) {
             res.status(500).json({ message: "Có lỗi xảy ra!", error });
         }
@@ -46,7 +46,7 @@ class SubCategoryController {
                 data: newSubCategory,
             });
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 
@@ -64,7 +64,7 @@ class SubCategoryController {
 
             res.status(200).json(subCategory);
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 
@@ -100,12 +100,12 @@ class SubCategoryController {
             if (imageFile) fs.unlinkSync(imageFile.path);
 
             if (updatedRowsCount > 0) {
-                res.status(200).json({ message: "Chỉnh sửa danh mục con thành công!" });
+                res.status(200).json({ message: "Chỉnh sửa danh mục con thành công!", success: true });
             } else {
-                res.status(404).json({ message: "Không tìm thấy danh mục con này!" });
+                res.status(404).json({ message: "Không tìm thấy danh mục con này!", success: false });
             }
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 
@@ -114,17 +114,17 @@ class SubCategoryController {
         try {
             const id = req.params.id;
 
-            const deletedRowsCount = await models.CUSTOMER.destroy({
-                where: { CUSTOMER_ID: id }
+            const deletedRowsCount = await models.SUB_CATEGORY.destroy({
+                where: { SUB_CATEGORY_ID: id }
             });
 
             if (deletedRowsCount > 0) {
-                res.status(200).json({ message: "Xóa danh mục con thành công!" });
+                res.status(200).json({ message: "Xóa danh mục con thành công!", success: true });
             } else {
-                res.status(404).json({ message: "Không tìm thấy danh mục con này!" });
+                res.status(404).json({ message: "Không tìm thấy danh mục con này!", success: false });
             }
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 }

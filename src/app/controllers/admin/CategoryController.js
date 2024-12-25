@@ -9,7 +9,7 @@ class CatergoryController {
     async showAllCategory(req, res, next) {
         try {
             const data = await models.CATEGORY.findAll({});
-            res.status(200).json(data);
+            res.status(200).json({ success: true, data });
         } catch (error) {
             res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
