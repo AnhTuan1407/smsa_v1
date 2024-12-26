@@ -1,5 +1,5 @@
-const db = require('../../models/index');
 const initialModelsSQLServer = require('../../models/initial-models');
+const db = require('../../models/index');
 const models = initialModelsSQLServer(db);
 
 const multer = require('multer');

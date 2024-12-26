@@ -74,9 +74,13 @@ class CatergoryController {
         try {
             const id = req.params.id;
 
+            const deleteSubCategory = await models.SUB_CATEGORY.destroy({
+                where: { CATEGORY_ID: id },
+            });
+
             const deletedRowsCount = await models.CATEGORY.destroy({
                 where: { CATEGORY_ID: id },
-            })
+            });
 
             if (deletedRowsCount > 0) {
                 res.status(200).json({ message: "Xóa danh mục thành công!", success: true });

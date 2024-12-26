@@ -23,7 +23,7 @@ class StaffController {
             const staffList = await models.STAFF.findAll();
             res.status(200).json(staffList);
         } catch (error) {
-            res.status(500).json({ message: "Có lỗi xảy ra!", error });
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
 

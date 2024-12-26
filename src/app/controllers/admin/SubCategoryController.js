@@ -78,7 +78,7 @@ class SubCategoryController {
             const subCategoryFetch = await models.SUB_CATEGORY.findOne({ where: { SUB_CATEGORY_ID: id } });
 
             if (!subCategoryFetch) {
-                return res.status(404).json({ success: false, message: "Không tìm thấy danh mục con!" });
+                return res.status(404).json({ success: false, message: "Không tìm thấy danh mục phụ!" });
             }
 
             let imageBase64 = subCategoryFetch.IMAGE;
@@ -96,13 +96,10 @@ class SubCategoryController {
                 DESCRIPTION: description,
             }, { where: { SUB_CATEGORY_ID: id } });
 
-            // Xóa file tạm sau khi đã chuyển đổi
-            if (imageFile) fs.unlinkSync(imageFile.path);
-
             if (updatedRowsCount > 0) {
-                res.status(200).json({ message: "Chỉnh sửa danh mục con thành công!", success: true });
+                res.status(200).json({ message: "Chỉnh sửa danh mục phụ thành công!", success: true });
             } else {
-                res.status(404).json({ message: "Không tìm thấy danh mục con này!", success: false });
+                res.status(404).json({ message: "Không tìm thấy danh mục phụ này!", success: false });
             }
         } catch (error) {
             res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
@@ -114,14 +111,18 @@ class SubCategoryController {
         try {
             const id = req.params.id;
 
+            const deleteService = await models.SERVICE.destroy({
+                where: { SUB_CATEGORY_ID: id }
+            });
+
             const deletedRowsCount = await models.SUB_CATEGORY.destroy({
                 where: { SUB_CATEGORY_ID: id }
             });
 
             if (deletedRowsCount > 0) {
-                res.status(200).json({ message: "Xóa danh mục con thành công!", success: true });
+                res.status(200).json({ message: "Xóa danh mục phụ thành công!", success: true });
             } else {
-                res.status(404).json({ message: "Không tìm thấy danh mục con này!", success: false });
+                res.status(404).json({ message: "Không tìm thấy danh mục phụ này!", success: false });
             }
         } catch (error) {
             res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
