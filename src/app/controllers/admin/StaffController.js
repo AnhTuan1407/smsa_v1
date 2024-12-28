@@ -183,6 +183,25 @@ class StaffController {
             res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
+
+    //[GET] /api/admin/staff/findByLocation/:locationId
+    async findByLocation(req, res, next) {
+        try {
+            const locationId = req.params.locationId;
+
+            const staffList = await models.STAFF.findAll({
+                where: { LOCATION_ID: locationId }
+            });
+
+            if (staffList.length > 0) {
+                res.status(200).json(staffList);
+            } else {
+                res.status(404).json({ message: "Không tìm thấy nhân viên nào cho địa điểm này!", success: false });
+            }
+        } catch (error) {
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
+        }
+    }
 }
 
 module.exports = new StaffController();

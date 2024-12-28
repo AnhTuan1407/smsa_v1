@@ -14,5 +14,6 @@ router.post('/create', upload.single('image'), staffController.doCreate);
 router.put('/edit/:id', fileUploadMiddleware, staffController.doEdit);
 router.delete('/delete/:id', staffController.doDelete);
 router.get('/detail/:id', staffController.showDetail);
+router.get('/findByLocation/:locationId', staffController.findByLocation);
 
 module.exports = router;
