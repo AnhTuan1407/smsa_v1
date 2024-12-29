@@ -31,7 +31,7 @@ class BookingController {
     //[POST] /api/client/booking/create
     async create(req, res, next) {
         try {
-            const { customerId, staffId, serviceIds, date, time } = req.body;
+            const { customerId, staffId, serviceIds, date, time, endTime } = req.body;
 
             // Tạo mới một bản ghi trong bảng APPOINTMENT
             const newBooking = await models.APPOINTMENT.create({
@@ -39,6 +39,8 @@ class BookingController {
                 STAFF_ID: staffId,
                 DATE_BOOKING: date,
                 TIME_BOOKING: time,
+                TIME_END: endTime,
+                STATUS: "Coming soon",
             });
 
             // Thêm các bản ghi vào bảng APPOINTMENT_DETAIL
@@ -88,6 +90,32 @@ class BookingController {
             } else {
                 res.status(404).json({ message: "Không tìm thấy booking!", success: false });
             }
+        } catch (error) {
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
+        }
+    }
+
+    //[GET] /api/client/booking/findByStaff/:staffId
+    async findByStaff(req, res, next) {
+        try {
+            const { staffId } = req.params;
+            const data = await models.APPOINTMENT.findAll({
+                where: { STAFF_ID: staffId }
+            });
+            res.status(200).json({ success: true, data });
+        } catch (error) {
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
+        }
+    }
+
+    //[GET] /api/client/booking/findByCustomer/:customerId
+    async findByCustomer(req, res, next) {
+        try {
+            const { customerId } = req.params;
+            const data = await models.APPOINTMENT.findAll({
+                where: { CUSTOMER_ID: customerId }
+            });
+            res.status(200).json({ success: true, data });
         } catch (error) {
             res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }

@@ -109,6 +109,31 @@ class CustomerController {
             res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
         }
     }
+
+    //[PUT] /api/admin/customers/edit
+    async edit(req, res, next) {
+        try {
+            const data = req.body;
+
+            const [updatedRowsCount] = await models.CUSTOMER.update({
+                NAME: data.NAME,
+                EMAIL: data.EMAIL,
+                PHONE: data.PHONE,
+                ADDRESS: data.ADDRESS,
+                DATE_OF_BIRTH: data.DATE_OF_BIRTH,
+                POINTS: data.POINTS,
+                ACCOUNT_ID: data.ACCOUNT_ID,
+            }, { where: { CUSTOMER_ID: data.CUSTOMER_ID } });
+
+            if (updatedRowsCount > 0) {
+                res.status(200).json({ message: "Chỉnh sửa khách hàng thành công!", success: true });
+            } else {
+                res.status(404).json({ message: "Không tìm thấy khách hàng để chỉnh sửa!", success: false });
+            }
+        } catch (error) {
+            res.status(500).json({ message: "Có lỗi xảy ra!", error, success: false });
+        }
+    }
 }
 
 module.exports = new CustomerController();

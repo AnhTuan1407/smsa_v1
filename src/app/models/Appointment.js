@@ -21,6 +21,9 @@ module.exports = function (sequelize, DataTypes) {
         TIME_BOOKING: {
             type: DataTypes.TIME,
         },
+        TIME_END: {
+            type: DataTypes.TIME,
+        },
     }, {
         tableName: 'APPOINTMENT',
         paranoid: true, // Kích hoạt xóa mềm
